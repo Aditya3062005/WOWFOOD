@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOWFOOD : Discover Your Taste</title>
+    <!-- 1. Link to the External CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Use Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Font Awesome for Icons (CDN Link) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container navbar">
+            <a href="#hero" class="logo">WOWFOOD</a>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#contact">Contact & Order</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-content">
+                <h1>Discover Your Taste at WOWFOOD</h1>
+                <p>The freshest ingredients, the boldest flavors, delivered to your door.</p>
+                <a href="#menu" class="btn-primary">View Full Menu</a>
+            </div>
+        </section>
+
+        <!-- Categories Section (CSS Grid Layout) -->
+        <section id="categories" class="container">
+            <h2 class="section-title">Explore Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <span class="category-icon"><i class="fas fa-pizza-slice"></i></span>
+                    <h3>Pizzas</h3>
+                    <p>Classic and gourmet pies.</p>
+                </div>
+                <div class="category-card">
+                    <span class="category-icon"><i class="fas fa-hamburger"></i></span>
+                    <h3>Burgers</h3>
+                    <p>Juicy patties and fresh toppings.</p>
+                </div>
+                <div class="category-card">
+                    <span class="category-icon"><i class="fas fa-drumstick-bite"></i></span>
+                    <h3>Starters</h3>
+                    <p>Perfect way to begin your meal.</p>
+                </div>
+                <div class="category-card">
+                    <span class="category-icon"><i class="fas fa-cookie-bite"></i></span>
+                    <h3>Desserts</h3>
+                    <p>Sweet treats to finish the feast.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Food Menu Section (Flexbox Layout for Cards) -->
+        <section id="menu" class="container">
+            <h2 class="section-title">Our Signature Dishes</h2>
+            <div class="menu-list">
+                <!-- Menu Item 1 -->
+                <article class="menu-item">
+                    <img src="https://placehold.co/350x200/B91C1C/fff?text=Spicy+Chicken" alt="Spicy Chicken Burger" class="menu-img">
+                    <div class="menu-details">
+                        <h4>Volcano Burger</h4>
+                        <p>Our famous crispy chicken fillet tossed in spicy volcano sauce, topped with crunchy slaw.</p>
+                        <span class="menu-price">₹450</span>
+                    </div>
+                </article>
+
+                <!-- Menu Item 2 -->
+                <article class="menu-item">
+                    <img src="https://placehold.co/350x200/FBBF24/333?text=Pepperoni+Pizza" alt="Pepperoni Pizza" class="menu-img">
+                    <div class="menu-details">
+                        <h4>Supreme Pepperoni</h4>
+                        <p>Thin-crust pizza loaded with premium pepperoni, mozzarella, and a fresh basil garnish.</p>
+                        <span class="menu-price">₹699</span>
+                    </div>
+                </article>
+
+                <!-- Menu Item 3 -->
+                <article class="menu-item">
+                    <img src="https://placehold.co/350x200/333/fff?text=Chocolate+Lava" alt="Chocolate Lava Cake" class="menu-img">
+                    <div class="menu-details">
+                        <h4>Lava Delight</h4>
+                        <p>Warm chocolate lava cake with a molten center, served with vanilla bean ice cream.</p>
+                        <span class="menu-price">₹299</span>
+                    </div>
+                </article>
+
+                <!-- Menu Item 4 -->
+                <article class="menu-item">
+                    <img src="https://placehold.co/350x200/B91C1C/fff?text=Veg+Momo" alt="Vegetable Momo" class="menu-img">
+                    <div class="menu-details">
+                        <h4>Steamed Veggie Momo</h4>
+                        <p>Traditional Tibetan dumplings stuffed with seasoned mixed vegetables, served with spicy chutney.</p>
+                        <span class="menu-price">₹210</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Contact & Order Section -->
+        <section id="contact" class="container">
+            <h2 class="section-title">Contact & Place Order</h2>
+            <div class="contact-content">
+                <div class="form-container">
+                    <h3>Quick Reservation / Order Inquiry</h3>
+                    <form class="contact-form" id="orderForm">
+                        <label for="name">Your Name*</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        <span class="error-message" id="nameError"></span>
+
+                        <label for="email">Your Email*</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                        <span class="error-message" id="emailError"></span>
+
+                        <label for="order-details">Order Details / Message*</label>
+                        <textarea id="order-details" name="order-details" rows="5" required placeholder="E.g., Reservation for 4 people on Friday 7pm OR I would like 2 Volcano Burgers."></textarea>
+                        <span class="error-message" id="orderDetailsError"></span>
+
+                        <button type="submit" class="btn-primary">Submit Inquiry</button>
+                    </form>
+                </div>
+
+                <div class="info-container">
+                    <h3>Restaurant Information</h3>
+                    <p><strong>Location:</strong> 123 Food Street, Gurugram, 122001</p>
+                    <p><strong>Phone:</strong> <a href="tel:+919876543210">+91 987 654 3210</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:order@wowfood.com">order@wowfood.com</a></p>
+                    <p><strong>Hours:</strong> Mon - Sun: 11:00 AM - 11:00 PM</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 WOWFOOD : Discover Your Taste. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 2. Link to the External JavaScript file at the end of the body -->
+    <script src="script.js"></script>
+</body>
+</html>
