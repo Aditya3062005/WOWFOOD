@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOWFOOD : Interactive Gastronomy</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 glass border-b border-slate-200 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="https://centurypacific.com.ph/wp-content/uploads/elementor/thumbs/Wow-p1em76s7maetupwl6r1p5pom8drcy0v2gbmsozu0ao.png" alt="WOWFOOD" class="h-10 w-auto object-contain">WOWFOOD
+            </a>
+
+            <div class="hidden md:flex space-x-8 font-semibold text-slate-600">
+                <a href="#home" class="hover:text-red-600 transition">Home</a>
+                <a href="#menu" class="hover:text-red-600 transition">Explore Menu</a>
+                <a href="#contact" class="hover:text-red-600 transition">Contact</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="openAuthModal()" id="nav-auth-btn" class="text-slate-600 hover:text-red-700 font-bold transition">Log In</button>
+                <button onclick="toggleProfile()" id="nav-profile-btn" class="hidden text-slate-600 hover:text-red-700 font-bold transition">
+                    <i class="fas fa-user-circle mr-1"></i> My Profile
+                </button>
+                
+                <button onclick="toggleCart()" class="relative p-2 text-slate-700 hover:text-red-600 transition">
+                    <i class="fas fa-shopping-basket text-2xl"></i>
+                    <span id="cart-count" class="cart-badge absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                </button>
+                
+                <button class="md:hidden text-slate-700" id="mobile-toggle">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="relative min-h-screen flex items-center justify-center pt-20 bg-red-700 text-white overflow-hidden">
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80" class="w-full h-full object-cover" alt="Background">
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Satisfy Your <br><span class="text-amber-400">Midnight Cravings.</span></h1>
+            <p class="text-xl mb-10 max-w-2xl mx-auto opacity-90 font-light">The fastest delivery in town for the freshest food you've ever tasted. Discover why we are called WOWFOOD.</p>
+            
+            <div class="max-w-xl mx-auto flex flex-col md:flex-row gap-4">
+                <div class="relative flex-grow">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="food-search" placeholder="Search for burgers, pizza, salads..." 
+                           class="w-full pl-12 pr-4 py-4 rounded-full text-slate-900 focus:ring-4 focus:ring-amber-400 outline-none transition shadow-2xl">
+                </div>
+                <a href="#menu" class="bg-amber-400 hover:bg-amber-500 text-red-900 font-bold py-4 px-10 rounded-full shadow-xl transition transform hover:scale-105 active:scale-95 whitespace-nowrap">
+                    Explore Menu
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="menu" class="py-24 container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-black text-slate-800 mb-4">Our Signature Menu</h2>
+            <div class="flex flex-wrap justify-center gap-4 mt-8" id="category-filters">
+                <button class="filter-btn active bg-red-700 text-white px-6 py-2 rounded-full font-bold shadow-md transition" data-category="all">All Items</button>
+                <button class="filter-btn bg-white text-slate-700 hover:bg-red-50 px-6 py-2 rounded-full font-bold shadow-sm border border-slate-200 transition" data-category="Burgers">Burgers</button>
+                <button class="filter-btn bg-white text-slate-700 hover:bg-red-50 px-6 py-2 rounded-full font-bold shadow-sm border border-slate-200 transition" data-category="Pizza">Pizza</button>
+                <button class="filter-btn bg-white text-slate-700 hover:bg-red-50 px-6 py-2 rounded-full font-bold shadow-sm border border-slate-200 transition" data-category="Sides">Sides</button>
+            </div>
+        </div>
+        <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+    </section>
+
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="flex flex-col h-full">
+            <div class="p-6 border-b flex justify-between items-center bg-red-700 text-white">
+                <h3 class="text-xl font-bold">Your Order</h3>
+                <button onclick="toggleCart()" class="text-white text-2xl"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="cart-items" class="flex-grow p-6 overflow-y-auto"></div>
+            <div class="p-6 border-t bg-slate-50">
+                <div class="flex justify-between mb-4 font-bold text-lg">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button onclick="handleCheckout()" class="w-full bg-red-700 text-white py-4 rounded-xl font-bold hover:bg-red-800 transition">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="profile-drawer" class="fixed top-0 left-0 h-full w-full md:w-96 bg-white shadow-2xl z-[70] transform -translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="flex flex-col h-full">
+            <div class="p-6 border-b flex justify-between items-center bg-slate-900 text-white">
+                <h3 class="text-xl font-bold text-amber-400">My Profile</h3>
+                <button onclick="toggleProfile()" class="text-white text-2xl"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="p-6 bg-slate-50 border-b flex items-center space-x-4">
+                <div id="profile-initials" class="w-12 h-12 bg-red-700 text-white rounded-full flex items-center justify-center font-bold text-xl">U</div>
+                <div>
+                    <h4 id="profile-name" class="font-bold text-slate-800">Guest User</h4>
+                    <p id="profile-email" class="text-xs text-slate-500">guest@wowfood.com</p>
+                </div>
+            </div>
+            <div class="flex-grow p-6 overflow-y-auto">
+                <h4 class="text-xs font-black uppercase text-slate-400 mb-4 tracking-widest">Order History</h4>
+                <div id="order-history" class="space-y-4">
+                    <p class="text-slate-400 text-center py-10 italic">No orders yet.</p>
+                </div>
+            </div>
+            <div class="p-6 border-t">
+                <button onclick="logout()" class="w-full border-2 border-red-700 text-red-700 py-3 rounded-xl font-bold hover:bg-red-50 transition">Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fas fa-times text-xl"></i></button>
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <h2 id="auth-title" class="text-3xl font-black text-slate-800">Welcome Back</h2>
+                    <p id="auth-subtitle" class="text-slate-500">Log in to your account</p>
+                </div>
+                <form id="auth-form" class="space-y-4">
+                    <div id="signup-fields" class="hidden">
+                        <input type="text" id="auth-name" placeholder="Full Name" class="w-full border p-4 rounded-xl outline-none focus:ring-2 focus:ring-red-500">
+                    </div>
+                    <input type="email" id="auth-email" placeholder="Email Address" required class="w-full border p-4 rounded-xl outline-none focus:ring-2 focus:ring-red-500">
+                    <input type="password" id="auth-pass" placeholder="Password" required class="w-full border p-4 rounded-xl outline-none focus:ring-2 focus:ring-red-500">
+                    <button type="submit" id="auth-submit-btn" class="w-full bg-red-700 text-white font-bold py-4 rounded-xl shadow-lg">Log In</button>
+                </form>
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-slate-500">
+                        <span id="auth-switch-text">Don't have an account?</span>
+                        <button onclick="toggleAuthMode()" id="auth-switch-btn" class="text-red-700 font-bold hover:underline ml-1">Sign Up</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="contact" class="bg-slate-900 text-white py-24">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 reveal">
+            <div>
+                <h2 class="text-4xl font-black mb-6">Visit Our Kitchen</h2>
+                <p class="text-slate-400 mb-8 leading-relaxed">Have questions about allergens or want to book a table for a special event? Reach out to us directly!</p>
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-red-700 p-3 rounded-full"><i class="fas fa-map-marker-alt"></i></div>
+                        <span>123 Food Street, Gurugram, India</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-red-700 p-3 rounded-full"><i class="fas fa-phone"></i></div>
+                        <span>+91 987 654 3210</span>
+                    </div>
+                </div>
+            </div>
+            <form id="orderForm" class="bg-white p-8 rounded-2xl text-slate-900 shadow-2xl">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <input type="text" placeholder="First Name" required class="border p-3 rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+                    <input type="text" placeholder="Last Name" required class="border p-3 rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+                </div>
+                <input type="email" placeholder="Email Address" required class="w-full border p-3 rounded-lg mb-4 focus:ring-2 focus:ring-red-500 outline-none">
+                <textarea placeholder="How can we help you?" rows="4" class="w-full border p-3 rounded-lg mb-4 focus:ring-2 focus:ring-red-500 outline-none"></textarea>
+                <button type="submit" class="w-full bg-red-700 text-white font-bold py-4 rounded-lg hover:bg-red-800 transition">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-black text-slate-500 py-10 text-center text-sm">
+        <p>&copy; 2025 WOWFOOD. Built with Passion.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
